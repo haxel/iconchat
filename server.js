@@ -1,8 +1,12 @@
 var paper = require('./lib/paper.js/node.js');
 var express = require('express');
 var receiver = require('./public/receiver');
-var webServer = express.createServer();
-var io = require('socket.io').listen(webServer);
+
+var app = express()
+  , http = require('http')
+  , server = http.createServer(app)
+  , io = require('socket.io').listen(server)
+  , path = require('path')
 
 function publishPathsToClient(socket) {
     var path = paper.project.activeLayer.firstChild;
@@ -31,16 +35,26 @@ function publishPathsToClient(socket) {
     }    
 }
 
-io.set('log level', 1);
-webServer.listen(8001);
-webServer.set('view engine', 'jade');
-webServer.use(express.static(__dirname + '/public'));
-webServer.use(express.errorHandler());
-webServer.use(express.bodyParser());
-webServer.get('/', function(req, res) {
+server.listen(8001);
+
+app.configure(function(){   
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.errorHandler());
+});
+
+app.get('/', function(req, res) {
    res.render('index'); 
 });
+
 paper.setup();
+
 io.sockets.on('connection', function(socket) {
     publishPathsToClient(socket);
     receiver.setupReceiver(paper, socket, true);
