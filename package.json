@@ -1,9 +1,10 @@
 {
-  "author": "einar otto stangvik <einaros@gmail.com>",
-  "name": "shared-paperjs",
+  "author": "axel heide <axel@roteroktober.de>",
+  "name": "iconchat",
+  "description" : "started from shared-paperjs by einar otto stangvik <einaros@gmail.com>",
   "version": "0.0.1",
   "repository": {
-    "url": "http://github.com/einaros/shared-paperjs"
+    "url": "http://github.com/haxel/iconchat"
   },
   "engines": {
     "node": ">v0.4.10"
