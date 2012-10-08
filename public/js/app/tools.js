@@ -1,4 +1,5 @@
-modules['tools'] = (function(exports, ui, socket) {
+define(['paper','app/ui','app/socket'],function (paper,ui,socket) {
+
     var hitOptions = {
         segments: true,
         stroke: true,

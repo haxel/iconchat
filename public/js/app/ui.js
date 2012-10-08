@@ -1,35 +1,6 @@
-modules['ui'] = (function(exports) {
-    // Todo: clean up the 'addButton' mess, and introduce tool buttons
+define(function () {
     var buttonCounter = 0;
-    exports.addButton = function(container, group, icon, onClick, active) {
-        var groupClass = 'button-group-' + container + '-' + group;
-        var bt = $('<div class="button">')
-            .addClass('button')
-            .addClass('toolbutton')
-            .addClass(groupClass)
-            .css({
-                top: 10 + (buttonCounter++) * 26,
-                'background-image': 'url(' + icon + ')'
-            })
-            .click(function() {
-                $('.button.' + groupClass).removeClass('active');
-                $(this).addClass('active');
-                onClick();
-            })
-            .hover(function() {
-                bt.addClass('hover');
-            }, function() {
-                bt.removeClass('hover');
-            });
-        if (active) {
-            bt.addClass('active');
-            onClick();
-        }
-        $('.bottom .bar#' + container).append(bt);
-        return bt;
-    }
-
-    function CanvasButtonContainer(x, y) {
+    var CanvasButtonContainer = function(x, y) {
         this.container = $('<div>');
         this.container.addClass('canvasbuttoncontainer');
         $('body').append(this.container);
@@ -63,10 +34,8 @@ modules['ui'] = (function(exports) {
     }
     CanvasButtonContainer.prototype.remove = function() {
         this.container.remove();
-    }    
-    exports.CanvasButtonContainer = CanvasButtonContainer;
-
-    function CanvasButton(icon) {
+    } 
+    var CanvasButton = function(icon) {
         var self = this;
         var bt = $('<div class="button">')
             .addClass('button')
@@ -87,5 +56,38 @@ modules['ui'] = (function(exports) {
     CanvasButton.prototype.remove = function() {
         this.bt.remove();
     }
-    exports.CanvasButton = CanvasButton;
+
+    return {
+        CanvasButton : CanvasButton,
+        CanvasButtonContainer : CanvasButtonContainer,
+        addButton : function(container, group, icon, onClick, active) {
+            var groupClass = 'button-group-' + container + '-' + group;
+            var bt = $('<div class="button">')
+                .addClass('button')
+                .addClass('toolbutton')
+                .addClass(groupClass)
+                .css({
+                    top: 10 + (buttonCounter++) * 26,
+                    'background-image': 'url(' + icon + ')'
+                })
+                .click(function() {
+                    $('.button.' + groupClass).removeClass('active');
+                    $(this).addClass('active');
+                    onClick();
+                })
+                .hover(function() {
+                    bt.addClass('hover');
+                }, function() {
+                    bt.removeClass('hover');
+                });
+            if (active) {
+                bt.addClass('active');
+                onClick();
+            }
+            $('.bottom .bar#' + container).append(bt);
+            return bt;
+        },
+
+    }
 });
+

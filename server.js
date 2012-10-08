@@ -1,43 +1,14 @@
 var paper = require('./lib/paper.js/node.js');
 var express = require('express');
-var receiver = require('./public/receiver');
+var sender = require('./sender');
+var storage = require('./storage');
 
 var app = express()
   , http = require('http')
   , server = http.createServer(app)
   , io = require('socket.io').listen(server)
-  , path = require('path')
-  , mongo = require('mongodb');
-
-var db = new mongo.Db('iconchat', new mongo.Server("127.0.0.1", 27017));
-
-db.open(function(err) {
-    if(err) {
-        console.log(err);
-        db.close();
-        process.exit(1);
-    } else {
-        console.log('db connection open')
-    }
-});
-
-function storeMessage(message) {
-    db.collection('path', function(err, collection) {
-      message.date = Date.now();
-      collection.insert(message, function(err) {
-      });
-  });
-}
-
-function importPath(callback) {
-    db.collection('path', function(err, collection) {
-        collection.find( {}, { sort: [[ "date", "desc" ]], limit: 25 }).toArray( function(err, messages) {
-            for (var i = messages.length - 1; i >= 0; i--) {
-              callback(messages[i]);
-            };
-        });
-    });
-}
+  , path = require('path');
+ 
 
 function getAllPaths(callback) {
     var path = paper.project.activeLayer.firstChild;
@@ -67,7 +38,7 @@ function getAllPaths(callback) {
 }
 
 function publishPathsToClient(socket) {
-    importPath(function(message){
+    storage.importPath(function(message){
       socket.emit('add path', message);
     });
     getAllPaths(function(message){      
@@ -97,13 +68,14 @@ paper.setup();
 
 io.sockets.on('connection', function(socket) {
     publishPathsToClient(socket);
-    receiver.setupReceiver(paper, socket, true);
+    sender.setup(paper, socket);
     socket.on('store path',function(){
       var pathIds = [];
       getAllPaths(function(message){
         pathIds.push(message.id);
-        storeMessage(message);
+        storage.storeMessage(message);
       });
       socket.emit('remove path', {id: pathIds});
-    })
+    });
+
 });

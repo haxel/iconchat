@@ -1,0 +1,94 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    background-image: url(../images/paper.jpg);
+}
+
+.toolbutton {
+    margin: 5px;
+    background-color: #777;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.button {
+    height: 16px;
+    width: 16px;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    border: 1px solid transparent;
+    display: inline-block;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.canvasbuttoncontainer {
+    position: absolute;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    background: white;
+    padding: 1px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.button.active {
+    background-color: #FFF;
+    border: 1px solid gray;
+}
+
+.button.hover {
+    background-color: #FFF;
+    border: 1px solid gray;
+}
+
+.bottom {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    text-align: center;
+}
+
+.bottom .bar {
+    height: 32px;
+    display: inline-block;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;    
+    border-radius: 5px;    
+    border: 1px solid rgb(125, 125, 125);
+    background-image: linear-gradient(bottom, rgb(31,31,31) 0%, rgb(56,56,56) 29%, rgb(38,38,38) 89%);
+    background-image: -o-linear-gradient(bottom, rgb(31,31,31) 0%, rgb(56,56,56) 29%, rgb(38,38,38) 89%);
+    background-image: -moz-linear-gradient(bottom, rgb(31,31,31) 0%, rgb(56,56,56) 29%, rgb(38,38,38) 89%);
+    background-image: -webkit-linear-gradient(bottom, rgb(31,31,31) 0%, rgb(56,56,56) 29%, rgb(38,38,38) 89%);
+    background-image: -ms-linear-gradient(bottom, rgb(31,31,31) 0%, rgb(56,56,56) 29%, rgb(38,38,38) 89%);
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, rgb(31,31,31)),
+        color-stop(0.29, rgb(56,56,56)),
+        color-stop(0.89, rgb(38,38,38))
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#1f1f1f', endColorstr='#383838');
+}
