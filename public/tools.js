@@ -271,9 +271,15 @@ modules['tools'] = (function(exports, ui, socket) {
         socket.emit('fit path', {id: this.path.name, rect: r, angle: angleDelta});
     }
 
+    var storeTool = new paper.Tool();
+    storeTool.onMouseUp = function(event) {
+        socket.emit('store path');
+    }
+
     ui.addButton('tools', 'tools', 'images/cursor.png', function() { switchTool(selectTool) }, true);
     ui.addButton('tools', 'tools', 'images/scale.png', function() { switchTool(resizeTool); });        
     ui.addButton('tools', 'tools', 'images/paintbrush.png', function() { switchTool(paintTool); });
     ui.addButton('tools', 'tools', 'images/rect.png', function() { switchTool(rectTool); });
     ui.addButton('tools', 'tools', 'images/circle.png', function() { switchTool(circleTool); });
+    ui.addButton('tools', 'tools', 'images/store.png', function() { switchTool(storeTool); });
 });
